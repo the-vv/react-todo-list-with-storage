@@ -86,7 +86,7 @@ function App() {
                     )
                   }
                   else {
-                    return (<></>)
+                    return (null)
                   }
                 })
               }
@@ -135,7 +135,7 @@ function App() {
                     )
                   }
                   else {
-                    return (<></>)
+                    return null
                   }
                 })
               }
@@ -184,7 +184,7 @@ function App() {
                     )
                   }
                   else {
-                    return (<></>)
+                    return (null)
                   }
                 })
               }
