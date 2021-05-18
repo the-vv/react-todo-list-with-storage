@@ -4,18 +4,16 @@ import './App.css';
 function App() {
   const [toDos, addTodos] = useState([]);
   const [text, setText] = useState('');
+
   useEffect(() => {
-    if (toDos.length === 0) {
-      let notes = JSON.parse(localStorage.getItem('todos'))
-      if (notes && notes.length > 0) {
-        addTodos(notes)
-      }
-    } else {
-      localStorage.setItem('todos', JSON.stringify(toDos));
+    let notes = JSON.parse(localStorage.getItem('todos'))
+    if (notes && notes.length > 0) {
+      addTodos(notes)
     }
-    return () => {
-      localStorage.setItem('todos', JSON.stringify(toDos));
-    }
+  }, [])
+
+  useEffect(() => {
+    localStorage.setItem('todos', JSON.stringify(toDos));
   }, [toDos])
 
   return (
@@ -33,8 +31,10 @@ function App() {
             <div className="input py-3">
               <input type="text" placeholder="🖊️ Add item..." onInput={e => setText(e.target.value)} value={text} />
               <i className="fas fa-plus" onClick={() => {
-                addTodos([...toDos, { value: text, done: false, removed: false, id: toDos.length }]);
-                setText('');
+                if(text.length > 0) {
+                  addTodos([...toDos, { value: text, done: false, removed: false, id: Date.now() }]);
+                  setText('');
+                }
               }}></i>
             </div>
           </div>
@@ -121,12 +121,13 @@ function App() {
                               () => {
                                 addTodos(
                                   toDos.filter(o => {
-                                    if (o.done) {
+                                    if (o.id === el.id) {
                                       return false
                                     }
                                     return true
                                   })
                                 )
+                                console.log(toDos)
                               }
                             } />
                           </div>
