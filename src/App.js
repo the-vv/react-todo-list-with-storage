@@ -108,7 +108,7 @@ function App() {
                       <div className="todos" key={el.id}>
                         <div className="todo col-12 bg-success text-white">
                           <div className="col-11">
-                            <label >Mark as Done: &nbsp;</label>
+                            <label >Marked as done: &nbsp;</label>
                             <input type="checkbox" name="{el.id}" id="{el.id}" checked={el.done} onChange={
                               () => {
                                 addTodos(
@@ -164,7 +164,7 @@ function App() {
                       <div className="todos" key={el.id}>
                         <div className="todo col-12 bg-warning">
                           <div className="col-11">
-                            <label >Mark as Done: &nbsp;</label>
+                            <label >Restore Todo: &nbsp;</label>
                             <input type="checkbox" name="{el.id}" id="{el.id}" value={el.done} onChange={
                               () => {
                                 addTodos(
