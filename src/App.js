@@ -35,12 +35,12 @@ function App() {
                   addTodos([...toDos, { value: text, done: false, removed: false, id: Date.now() }]);
                   setText('');
                 }
-              }}></i>
+              }}>
+              </i>
             </div>
           </div>
         </div>
       </div>
-
       <div className="container-fluid">
         <div className="row">
           <div className="col-md-4 mb-3">
@@ -52,25 +52,25 @@ function App() {
                     return (
                       <div className="todos" key={el.id}>
                         <div className="todo col-12 bg-primary text-white">
-                          <div className="col-11">
-                            <label className="small">Mark as Done:&nbsp;</label>
-                            <input type="checkbox" name={el.id} id="" value={el.done} onChange={
+                          <div className="col-11 text-center">
+                            <button className="btn btn-success shadow" onClick={
                               () => {
                                 addTodos(
                                   toDos.map(o => {
                                     if (o.id === el.id) {
                                       o.done = !o.done;
+                                      o.id = Date.now()
                                     }
                                     return o
                                   })
                                 )
                               }
-                            } />
+                            }>Mark as Done</button>
                             <p className="todo-content h4 my-2" style={{ marginBottom: '0px' }}>
                               {el.value}
                             </p>
-                            <p style={{ marginBottom: '', fontSize: '0.7em', color: 'white'}}>
-                              {getTime(el.id)} 
+                            <p style={{ marginBottom: '', fontSize: '0.7em', color: 'white' }}>
+                              {getTime(el.id)}
                             </p>
                           </div>
                           <div className="col-1">
@@ -80,6 +80,7 @@ function App() {
                                   toDos.map(o => {
                                     if (o.id === el.id) {
                                       o.removed = !o.removed;
+                                      o.id = Date.now()
                                     }
                                     return o
                                   })
@@ -107,25 +108,27 @@ function App() {
                     return (
                       <div className="todos" key={el.id}>
                         <div className="todo col-12 bg-success text-white">
-                          <div className="col-11">
-                            <label >Marked as done: &nbsp;</label>
-                            <input type="checkbox" name="{el.id}" id="{el.id}" checked={el.done} onChange={
+                          <div className="col-11 text-center">
+                            <button className="btn btn-primary shadow" onClick={
                               () => {
                                 addTodos(
                                   toDos.map(o => {
                                     if (o.id === el.id) {
-                                      o.done = !o.done
+                                      o.done = !o.done;
+                                      o.id = Date.now();
                                     }
                                     return o
                                   })
                                 )
                               }
-                            } />                            
+                            } >
+                              Mark as Undone
+                            </button>
                             <p className="todo-content h4 my-2" style={{ marginBottom: '0px' }}>
                               {el.value}
                             </p>
-                            <p style={{ marginBottom: '', fontSize: '0.7em', color: 'white'}}>
-                              {getTime(el.id)} 
+                            <p style={{ marginBottom: '', fontSize: '0.7em', color: 'white' }}>
+                              Done on: {getTime(el.id)}
                             </p>
                           </div>
                           <div className="col-1">
@@ -161,26 +164,28 @@ function App() {
                   if (el.removed) {
                     return (
                       <div className="todos" key={el.id}>
-                        <div className="todo col-12 bg-warning">
+                        <div className="todo col-12 bg-warning text-center">
                           <div className="col-11">
-                            <label >Restore Todo: &nbsp;</label>
-                            <input type="checkbox" name="{el.id}" id="{el.id}" value={el.done} onChange={
+                            <button className="btn btn-success shadow" onClick={
                               () => {
                                 addTodos(
                                   toDos.map(o => {
                                     if (o.id === el.id) {
-                                      o.removed = !o.removed
+                                      o.removed = !o.removed;
+                                      o.id = Date.now()
                                     }
                                     return o
                                   })
                                 )
                               }
-                            } />                          
+                            }>
+                              Restore Todo
+                            </button>
                             <p className="todo-content h4 my-2" style={{ marginBottom: '0px' }}>
                               {el.value}
                             </p>
-                            <p style={{ marginBottom: '', fontSize: '0.7em', color: 'black'}}>
-                              {getTime(el.id)} 
+                            <p style={{ marginBottom: '', fontSize: '0.7em', color: 'black' }}>
+                              Cancelled on: {getTime(el.id)}
                             </p>
                           </div>
                           <div className="col-1">
