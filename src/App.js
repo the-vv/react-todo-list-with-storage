@@ -51,7 +51,7 @@ function App() {
                   if (!el.done && !el.removed) {
                     return (
                       <div className="todos" key={el.id}>
-                        <div className="todo col-12 bg-primary text-white">
+                        <div className="todo col-12 bg-primary text-white animate__animated animate__bounceIn animate__faster">
                           <div className="col-11 text-center">
                             <button className="btn btn-success shadow" onClick={
                               () => {
@@ -107,7 +107,7 @@ function App() {
                   if (el.done && !el.removed) {
                     return (
                       <div className="todos" key={el.id}>
-                        <div className="todo col-12 bg-success text-white">
+                        <div className="todo col-12 bg-success text-white animate__animated animate__bounceIn animate__faster">
                           <div className="col-11 text-center">
                             <button className="btn btn-primary shadow" onClick={
                               () => {
@@ -164,7 +164,7 @@ function App() {
                   if (el.removed) {
                     return (
                       <div className="todos" key={el.id}>
-                        <div className="todo col-12 bg-warning text-center">
+                        <div className="todo col-12 bg-warning text-center animate__animated animate__bounceIn animate__faster">
                           <div className="col-11">
                             <button className="btn btn-success shadow" onClick={
                               () => {
