@@ -29,17 +29,16 @@ function App() {
         <div className="col-12 d-flex justify-content-center">
           <div className="text-center pb-3">
             <div className="subHeading">
-              <br />
-              <h2>Whoop, it's {today()}, {todayDate()} </h2>
+              <h2>Hey There, it's {today()}, {todayDate()} </h2>
             </div>
-            <div className="input py-3">
+            <div className="input py-1">
               <input type="text" placeholder="🖊️ Add item..." onInput={e => setText(e.target.value)} value={text} onKeyDown={(e) => {
                 if (e.key === 'Enter' && text.length > 0) {
                   onAdd({ value: text, done: false, removed: false, id: Date.now() });
                   setText('');
                 }
               }} />
-              <i className="fas fa-plus" onClick={() => {
+              <i className="fas fa-plus px-2 add-button h-100 d-flex align-items-center justify-content-center" onClick={() => {
                 if (text.length > 0) {
                   onAdd({ value: text, done: false, removed: false, id: Date.now() });
                   setText('');
@@ -52,8 +51,10 @@ function App() {
       </div>
       <div className="container-fluid">
         <div className="row">
-          <div className="col-md-4 mb-3 border pb-3">
-            <h2 align="center ">Active</h2>
+          <div className="col-md-4 mb-3 border pb-3 rounded-3 pt-1">
+            <h3 align="center " className='m-0'>Active ({
+              toDos.filter(el => !el.done && !el.removed).length
+            })</h3>
             <div className="row">
               {
                 toDos.map(el => {
@@ -125,8 +126,8 @@ function App() {
               }
             </div>
           </div>
-          <div className="col-md-4 mb-3 border pb-3">
-            <h2 align="center ">Finished</h2>
+          <div className="col-md-4 mb-3 border pb-3 rounded-3 pt-1">
+            <h3 align="center " className='m-0'>Finished ({toDos.filter(el => el.done && !el.removed).length})</h3>
             <div className="row">
               {
                 toDos.map(el => {
@@ -184,8 +185,8 @@ function App() {
               }
             </div>
           </div>
-          <div className="col-md-4 mb-3 border pb-3">
-            <h2 align="center"> Cancelled</h2>
+          <div className="col-md-4 mb-3 border pb-3 rounded-3 pt-1">
+            <h3 align="center"> Cancelled ({toDos.filter(el => el.removed).length})</h3>
             <div className="row">
               {
                 toDos.map(el => {
