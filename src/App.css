@@ -4,7 +4,7 @@
 }
 
 body {
-  background-color: #020631;
+  background-color: #ffffff;
 }
 
 
@@ -14,13 +14,14 @@ body {
 
 .app h1,
 h2 {
-  color: white;
+  color: black;
 }
 
 .app .input {
   display        : flex;
   justify-content: center;
   align-items    : center;
+  border: 1px solid #ccc;
 }
 
 .app .input {
@@ -74,6 +75,7 @@ h2 {
   align-items     : center;
   border-radius   : 6px;
   padding         : 5px;
+  border-radius: 8px;
 }
 
 .app .todos .todo .left {

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import './App.css';
 
 function App() {
@@ -16,10 +16,14 @@ function App() {
     localStorage.setItem('todos', JSON.stringify(toDos));
   }, [toDos])
 
+  const onAdd = useCallback((newTodo) => {
+    addTodos([...toDos, newTodo]);
+  }, [toDos]);
+
   return (
     <div className="app container-fluid">
       <div className="mainHeading mt-3">
-        <h1 align="center ">ToDo List</h1>
+        {/* <h1 align="center ">To do list</h1> */}
       </div>
       <div className="row">
         <div className="col-12 d-flex justify-content-center">
@@ -29,10 +33,15 @@ function App() {
               <h2>Whoop, it's {today()}, {todayDate()} </h2>
             </div>
             <div className="input py-3">
-              <input type="text" placeholder="🖊️ Add item..." onInput={e => setText(e.target.value)} value={text} />
+              <input type="text" placeholder="🖊️ Add item..." onInput={e => setText(e.target.value)} value={text} onKeyDown={(e) => {
+                if (e.key === 'Enter' && text.length > 0) {
+                  onAdd({ value: text, done: false, removed: false, id: Date.now() });
+                  setText('');
+                }
+              }} />
               <i className="fas fa-plus" onClick={() => {
                 if (text.length > 0) {
-                  addTodos([...toDos, { value: text, done: false, removed: false, id: Date.now() }]);
+                  onAdd({ value: text, done: false, removed: false, id: Date.now() });
                   setText('');
                 }
               }}>
@@ -43,17 +52,17 @@ function App() {
       </div>
       <div className="container-fluid">
         <div className="row">
-          <div className="col-md-4 mb-3">
-            <h2 align="center ">Active Todos</h2>
+          <div className="col-md-4 mb-3 border pb-3">
+            <h2 align="center ">Active</h2>
             <div className="row">
               {
                 toDos.map(el => {
                   if (!el.done && !el.removed) {
                     return (
                       <div className="todos" key={el.id}>
-                        <div className="todo col-12 bg-primary text-white animate__animated animate__bounceIn animate__faster">
+                        <div className="todo col-12 border border-primary border-3 animate__animated animate__bounceIn animate__faster" style={{ backgroundColor: 'rgba(13, 110, 253, 0.1)' }}>
                           <div className="col-11 text-center">
-                            <button className="btn btn-success shadow" onClick={
+                            {/* <button className="btn btn-success shadow" onClick={
                               () => {
                                 addTodos(
                                   toDos.map(o => {
@@ -65,21 +74,22 @@ function App() {
                                   })
                                 )
                               }
-                            }>Mark as Done</button>
-                            <p className="todo-content h4 my-2" style={{ marginBottom: '0px' }}>
+                            }>Mark as Done</button> */}
+                            <p className="todo-content h4 my-2 text-primary" style={{ marginBottom: '0px' }}>
                               {el.value}
                             </p>
-                            <p style={{ marginBottom: '', fontSize: '0.7em', color: 'white' }}>
+                            <p style={{ marginBottom: '', fontSize: '0.7em', color: '#6c757d' }}>
                               {getTime(el.id)}
                             </p>
                           </div>
-                          <div className="col-1">
-                            <i className="fas fa-times text-dark" onClick={
-                              () => {
-                                addTodos(
-                                  toDos.map(o => {
-                                    if (o.id === el.id) {
-                                      o.removed = !o.removed;
+                          <div className="col-1 d-flex flex-column gap-1">
+                            <button className="btn btn-success btn-sm shadow">
+                              <i className="fas fa-check fa-xs text-white" onClick={
+                                () => {
+                                  addTodos(
+                                    toDos.map(o => {
+                                      if (o.id === el.id) {
+                                      o.done = !o.done;
                                       o.id = Date.now()
                                     }
                                     return o
@@ -87,6 +97,22 @@ function App() {
                                 )
                               }
                             } />
+                            </button>
+                            <button className="btn btn-danger btn-sm shadow">
+                              <i className="fas fa-times fa-xs text-white" onClick={
+                                () => {
+                                  addTodos(
+                                    toDos.map(o => {
+                                      if (o.id === el.id) {
+                                        o.removed = !o.removed;
+                                        o.id = Date.now()
+                                      }
+                                      return o
+                                    })
+                                  )
+                                }
+                              } />
+                            </button>
                           </div>
                         </div>
                       </div>
@@ -99,17 +125,25 @@ function App() {
               }
             </div>
           </div>
-          <div className="col-md-4 mb-3">
-            <h2 align="center ">Todos finished</h2>
+          <div className="col-md-4 mb-3 border pb-3">
+            <h2 align="center ">Finished</h2>
             <div className="row">
               {
                 toDos.map(el => {
                   if (el.done && !el.removed) {
                     return (
                       <div className="todos" key={el.id}>
-                        <div className="todo col-12 bg-success text-white animate__animated animate__bounceIn animate__faster">
+                        <div className="todo col-12 border border-success border-3 animate__animated animate__bounceIn animate__faster" style={{ backgroundColor: 'rgba(25, 135, 84, 0.1)' }}>
                           <div className="col-11 text-center">
-                            <button className="btn btn-primary shadow" onClick={
+                            <p className="todo-content h4 my-2 text-success" style={{ marginBottom: '0px' }}>
+                              {el.value}
+                            </p>
+                            <p style={{ marginBottom: '', fontSize: '0.7em', color: '#6c757d' }}>
+                              Done on: {getTime(el.id)}
+                            </p>
+                          </div>
+                          <div className="col-1 d-flex flex-column gap-1">
+                            <button className="btn btn-primary btn-sm shadow" onClick={
                               () => {
                                 addTodos(
                                   toDos.map(o => {
@@ -121,29 +155,23 @@ function App() {
                                   })
                                 )
                               }
-                            } >
-                              Mark as Undone
+                            }>
+                              <i className="fas fa-undo fa-xs text-white" />
                             </button>
-                            <p className="todo-content h4 my-2" style={{ marginBottom: '0px' }}>
-                              {el.value}
-                            </p>
-                            <p style={{ marginBottom: '', fontSize: '0.7em', color: 'white' }}>
-                              Done on: {getTime(el.id)}
-                            </p>
-                          </div>
-                          <div className="col-1">
-                            <i className="fas fa-times text-dark" onClick={
-                              () => {
-                                addTodos(
-                                  toDos.filter(o => {
-                                    if (o.id === el.id) {
-                                      return false
-                                    }
-                                    return true
-                                  })
-                                )
-                              }
-                            } />
+                            <button className="btn btn-danger btn-sm shadow">
+                              <i className="fas fa-times fa-xs text-white" onClick={
+                                () => {
+                                  addTodos(
+                                    toDos.filter(o => {
+                                      if (o.id === el.id) {
+                                        return false
+                                      }
+                                      return true
+                                    })
+                                  )
+                                }
+                              } />
+                            </button>
                           </div>
                         </div>
                       </div>
@@ -156,17 +184,25 @@ function App() {
               }
             </div>
           </div>
-          <div className="col-md-4 mb-3">
-            <h2 align="center"> Todos cancelled</h2>
+          <div className="col-md-4 mb-3 border pb-3">
+            <h2 align="center"> Cancelled</h2>
             <div className="row">
               {
                 toDos.map(el => {
                   if (el.removed) {
                     return (
                       <div className="todos" key={el.id}>
-                        <div className="todo col-12 bg-warning text-center animate__animated animate__bounceIn animate__faster">
+                        <div className="todo col-12 border border-danger border-3 text-center animate__animated animate__bounceIn animate__faster" style={{ backgroundColor: 'rgba(220, 53, 69, 0.1)' }}>
                           <div className="col-11">
-                            <button className="btn btn-success shadow" onClick={
+                            <p className="todo-content h4 my-2 text-danger" style={{ marginBottom: '0px' }}>
+                              {el.value}
+                            </p>
+                            <p style={{ marginBottom: '', fontSize: '0.7em', color: '#6c757d' }}>
+                              Cancelled on: {getTime(el.id)}
+                            </p>
+                          </div>
+                          <div className="col-1 d-flex flex-column gap-1">
+                            <button className="btn btn-success btn-sm shadow" onClick={
                               () => {
                                 addTodos(
                                   toDos.map(o => {
@@ -179,28 +215,22 @@ function App() {
                                 )
                               }
                             }>
-                              Restore Todo
+                              <i className="fas fa-redo fa-xs text-white" />
                             </button>
-                            <p className="todo-content h4 my-2" style={{ marginBottom: '0px' }}>
-                              {el.value}
-                            </p>
-                            <p style={{ marginBottom: '', fontSize: '0.7em', color: 'black' }}>
-                              Cancelled on: {getTime(el.id)}
-                            </p>
-                          </div>
-                          <div className="col-1">
-                            <i className="fas fa-times text-dark" onClick={
-                              () => {
-                                addTodos(
-                                  toDos.filter(o => {
-                                    if (o.id === el.id) {
-                                      return false
-                                    }
-                                    return true
-                                  })
-                                )
-                              }
-                            } />
+                            <button className="btn btn-danger btn-sm shadow">
+                              <i className="fas fa-times fa-xs text-white" onClick={
+                                () => {
+                                  addTodos(
+                                    toDos.filter(o => {
+                                      if (o.id === el.id) {
+                                        return false
+                                      }
+                                      return true
+                                    })
+                                  )
+                                }
+                              } />
+                            </button>
                           </div>
                         </div>
                       </div>
