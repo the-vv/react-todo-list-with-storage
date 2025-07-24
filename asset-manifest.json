@@ -1,20 +1,20 @@
 {
   "files": {
-    "main.css": "/todoapp/static/css/main.83d30e3b.chunk.css",
-    "main.js": "/todoapp/static/js/main.b0bb621a.chunk.js",
-    "main.js.map": "/todoapp/static/js/main.b0bb621a.chunk.js.map",
-    "runtime-main.js": "/todoapp/static/js/runtime-main.a9c3639f.js",
-    "runtime-main.js.map": "/todoapp/static/js/runtime-main.a9c3639f.js.map",
-    "static/js/2.1bca1716.chunk.js": "/todoapp/static/js/2.1bca1716.chunk.js",
-    "static/js/2.1bca1716.chunk.js.map": "/todoapp/static/js/2.1bca1716.chunk.js.map",
-    "index.html": "/todoapp/index.html",
-    "static/css/main.83d30e3b.chunk.css.map": "/todoapp/static/css/main.83d30e3b.chunk.css.map",
-    "static/js/2.1bca1716.chunk.js.LICENSE.txt": "/todoapp/static/js/2.1bca1716.chunk.js.LICENSE.txt"
+    "main.css": "/react-todo-list-with-storage/static/css/main.675f265f.chunk.css",
+    "main.js": "/react-todo-list-with-storage/static/js/main.08068218.chunk.js",
+    "main.js.map": "/react-todo-list-with-storage/static/js/main.08068218.chunk.js.map",
+    "runtime-main.js": "/react-todo-list-with-storage/static/js/runtime-main.c1d46856.js",
+    "runtime-main.js.map": "/react-todo-list-with-storage/static/js/runtime-main.c1d46856.js.map",
+    "static/js/2.1bca1716.chunk.js": "/react-todo-list-with-storage/static/js/2.1bca1716.chunk.js",
+    "static/js/2.1bca1716.chunk.js.map": "/react-todo-list-with-storage/static/js/2.1bca1716.chunk.js.map",
+    "index.html": "/react-todo-list-with-storage/index.html",
+    "static/css/main.675f265f.chunk.css.map": "/react-todo-list-with-storage/static/css/main.675f265f.chunk.css.map",
+    "static/js/2.1bca1716.chunk.js.LICENSE.txt": "/react-todo-list-with-storage/static/js/2.1bca1716.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
-    "static/js/runtime-main.a9c3639f.js",
+    "static/js/runtime-main.c1d46856.js",
     "static/js/2.1bca1716.chunk.js",
-    "static/css/main.83d30e3b.chunk.css",
-    "static/js/main.b0bb621a.chunk.js"
+    "static/css/main.675f265f.chunk.css",
+    "static/js/main.08068218.chunk.js"
   ]
 }
