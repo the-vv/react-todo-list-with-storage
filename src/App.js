@@ -1,9 +1,11 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import './App.css';
+import { getMotivationMessage }  from'./motive'
 
 function App() {
   const [toDos, addTodos] = useState([]);
   const [text, setText] = useState('');
+  const todayMotive = getMotivationMessage()
 
   useEffect(() => {
     let notes = JSON.parse(localStorage.getItem('todos'))
@@ -29,7 +31,8 @@ function App() {
         <div className="col-12 d-flex justify-content-center">
           <div className="text-center pb-3">
             <div className="subHeading">
-              <h2>Hey There, it's {today()}, {todayDate()} </h2>
+              <h4>Hey There, it's {today()}, {todayDate()} </h4>
+              <h6 className='text-secondary'>{todayMotive}</h6>
             </div>
             <div className="input py-1">
               <input type="text" placeholder="🖊️ Add item..." onInput={e => setText(e.target.value)} value={text} onKeyDown={(e) => {
@@ -52,9 +55,9 @@ function App() {
       <div className="container-fluid">
         <div className="row">
           <div className="col-md-4 mb-3 border pb-3 rounded-3 pt-1">
-            <h3 align="center " className='m-0'>Active ({
+            <h4 align="center " className='m-0'>Active ({
               toDos.filter(el => !el.done && !el.removed).length
-            })</h3>
+            })</h4>
             <div className="row">
               {
                 toDos.map(el => {
@@ -127,7 +130,7 @@ function App() {
             </div>
           </div>
           <div className="col-md-4 mb-3 border pb-3 rounded-3 pt-1">
-            <h3 align="center " className='m-0'>Finished ({toDos.filter(el => el.done && !el.removed).length})</h3>
+            <h4 align="center " className='m-0'>Finished ({toDos.filter(el => el.done && !el.removed).length})</h4>
             <div className="row">
               {
                 toDos.map(el => {
@@ -186,7 +189,7 @@ function App() {
             </div>
           </div>
           <div className="col-md-4 mb-3 border pb-3 rounded-3 pt-1">
-            <h3 align="center"> Cancelled ({toDos.filter(el => el.removed).length})</h3>
+            <h4 align="center"> Cancelled ({toDos.filter(el => el.removed).length})</h4>
             <div className="row">
               {
                 toDos.map(el => {
