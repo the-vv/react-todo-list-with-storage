@@ -90,14 +90,14 @@ function App() {
                                   addTodos(
                                     toDos.map(o => {
                                       if (o.id === el.id) {
-                                      o.done = !o.done;
-                                      o.id = Date.now()
-                                    }
-                                    return o
-                                  })
-                                )
-                              }
-                            } />
+                                        o.done = !o.done;
+                                        o.id = Date.now()
+                                      }
+                                      return o
+                                    })
+                                  )
+                                }
+                              } />
                             </button>
                             <button className="btn btn-danger btn-sm shadow">
                               <i className="fas fa-times fa-xs text-white" onClick={
