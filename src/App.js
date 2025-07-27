@@ -25,54 +25,52 @@ function App() {
   }, [toDos])
 
   const onAdd = useCallback((newTodo) => {
-    addTodos([...toDos, newTodo]);
+    addTodos([newTodo, ...toDos]);
   }, [toDos]);
 
   return (
     <div className="app container-fluid">
-      <div className="mainHeading mt-3">
-        {/* <h1 align="center ">To do list</h1> */}
-      </div>
-      <div className="row">
-        <div className="col-12 d-flex justify-content-center">
-          <div className="text-center pb-3">
-            <div className="subHeading">
-              <h4>Hey There, it's {today()}, {todayDate()} </h4>
-              <h6 className='text-secondary'>{quote}</h6>
-            </div>
-            <div className="input py-1">
-              <input type="text" placeholder="🖊️ Add item..." onInput={e => setText(e.target.value)} value={text} onKeyDown={(e) => {
-                if (e.key === 'Enter' && text.length > 0) {
-                  onAdd({ value: text, done: false, removed: false, id: Date.now() });
-                  setText('');
-                }
-              }} />
-              <i className="fas fa-plus px-2 add-button h-100 d-flex align-items-center justify-content-center" onClick={() => {
-                if (text.length > 0) {
-                  onAdd({ value: text, done: false, removed: false, id: Date.now() });
-                  setText('');
-                }
-              }}>
-              </i>
+      <div className='d-flex w-100 flex-column' style={{ height: '100vh', overflow: 'hidden' }}>
+        <div className="row" style={{ flexShrink: '0' }}>
+          <div className="col-12 d-flex justify-content-center">
+            <div className="text-center pb-3">
+              <div className="subHeading">
+                <h4>Hey There, it's {today()}, {todayDate()} </h4>
+                <h6 className='text-secondary'>{quote || 'Loading Quote of the Day...'}</h6>
+              </div>
+              <div className="input py-1">
+                <input type="text" placeholder="🖊️ Add item..." onInput={e => setText(e.target.value)} value={text} onKeyDown={(e) => {
+                  if (e.key === 'Enter' && text.length > 0) {
+                    onAdd({ value: text, done: false, removed: false, id: Date.now() });
+                    setText('');
+                  }
+                }} />
+                <i className="fas fa-plus px-2 add-button h-100 d-flex align-items-center justify-content-center" onClick={() => {
+                  if (text.length > 0) {
+                    onAdd({ value: text, done: false, removed: false, id: Date.now() });
+                    setText('');
+                  }
+                }}>
+                </i>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      <div className="container-fluid">
-        <div className="row">
-          <div className="col-md-4 mb-3 border pb-3 rounded-3 pt-1">
-            <h6 align="center " className='m-0'>Active ({
-              toDos.filter(el => !el.done && !el.removed).length
-            })</h6>
-            <div className="row">
-              {
-                toDos.map(el => {
-                  if (!el.done && !el.removed) {
-                    return (
-                      <div className="todos" key={el.id}>
-                        <div className="todo col-12 border border-primary border-1 animate__animated animate__bounceIn animate__faster" style={{ backgroundColor: 'rgba(13, 110, 253, 0.1)' }}>
-                          <div className="col-11 text-center">
-                            {/* <button className="btn btn-success shadow" onClick={
+        <div className="container-fluid" style={{ flexGrow: '1', overflowY: 'auto' }}>
+          <div className="row">
+            <div className="col-md-4 mb-3 border pb-3 rounded-3 pt-1">
+              <h6 align="center " className='m-0'>
+                Active ({toDos.filter(el => !el.done && !el.removed).length})
+              </h6>
+              <div className="row">
+                {
+                  toDos.map(el => {
+                    if (!el.done && !el.removed) {
+                      return (
+                        <div className="todos" key={el.id}>
+                          <div className="todo col-12 border border-primary border-1" style={{ backgroundColor: 'rgba(13, 110, 253, 0.03)' }}>
+                            <div className="col-11 text-center">
+                              {/* <button className="btn btn-success shadow" onClick={
                               () => {
                                 addTodos(
                                   toDos.map(o => {
@@ -85,16 +83,15 @@ function App() {
                                 )
                               }
                             }>Mark as Done</button> */}
-                            <p className="todo-content h5 my-2 text-primary" style={{ marginBottom: '0px' }}>
-                              {el.value}
-                            </p>
-                            <p style={{ marginBottom: '', fontSize: '0.7em', color: '#6c757d' }}>
-                              {getTime(el.id)}
-                            </p>
-                          </div>
-                          <div className="col-1 d-flex flex-column gap-1">
-                            <button className="btn btn-success btn-sm shadow">
-                              <i className="fas fa-check fa-xs text-white" onClick={
+                              <p className="todo-content h5 my-2 text-primary" style={{ marginBottom: '0px' }}>
+                                {el.value}
+                              </p>
+                              <p style={{ marginBottom: '', fontSize: '0.7em', color: '#6c757d' }}>
+                                {getTime(el.id)}
+                              </p>
+                            </div>
+                            <div className="col-1 d-flex flex-column gap-1">
+                              <button className="btn btn-success btn-sm shadow" onClick={
                                 () => {
                                   addTodos(
                                     toDos.map(o => {
@@ -106,10 +103,10 @@ function App() {
                                     })
                                   )
                                 }
-                              } />
-                            </button>
-                            <button className="btn btn-danger btn-sm shadow">
-                              <i className="fas fa-times fa-xs text-white" onClick={
+                              } >
+                                <i className="fas fa-check fa-xs text-white" />
+                              </button>
+                              <button className="btn btn-danger btn-sm shadow" onClick={
                                 () => {
                                   addTodos(
                                     toDos.map(o => {
@@ -121,55 +118,55 @@ function App() {
                                     })
                                   )
                                 }
-                              } />
-                            </button>
+                              } >
+                                <i className="fas fa-times fa-xs text-white" />
+                              </button>
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    )
-                  }
-                  else {
-                    return (null)
-                  }
-                })
-              }
+                      )
+                    }
+                    else {
+                      return (null)
+                    }
+                  })
+                }
+              </div>
             </div>
-          </div>
-          <div className="col-md-4 mb-3 border pb-3 rounded-3 pt-1">
-            <h6 align="center " className='m-0'>Finished ({toDos.filter(el => el.done && !el.removed).length})</h6>
-            <div className="row">
-              {
-                toDos.map(el => {
-                  if (el.done && !el.removed) {
-                    return (
-                      <div className="todos" key={el.id}>
-                        <div className="todo col-12 border border-success border-1 animate__animated animate__bounceIn animate__faster" style={{ backgroundColor: 'rgba(25, 135, 84, 0.1)' }}>
-                          <div className="col-11 text-center">
-                            <p className="todo-content h5 my-2 text-success" style={{ marginBottom: '0px' }}>
-                              {el.value}
-                            </p>
-                            <p style={{ marginBottom: '', fontSize: '0.7em', color: '#6c757d' }}>
-                              Done on: {getTime(el.id)}
-                            </p>
-                          </div>
-                          <div className="col-1 d-flex flex-column gap-1">
-                            <button className="btn btn-primary btn-sm shadow" onClick={
-                              () => {
-                                addTodos(
-                                  toDos.map(o => {
-                                    if (o.id === el.id) {
-                                      o.done = !o.done;
-                                      o.id = Date.now();
-                                    }
-                                    return o
-                                  })
-                                )
-                              }
-                            }>
-                              <i className="fas fa-undo fa-xs text-white" />
-                            </button>
-                            <button className="btn btn-danger btn-sm shadow">
-                              <i className="fas fa-times fa-xs text-white" onClick={
+            <div className="col-md-4 mb-3 border pb-3 rounded-3 pt-1">
+              <h6 align="center " className='m-0'>Finished ({toDos.filter(el => el.done && !el.removed).length})</h6>
+              <div className="row">
+                {
+                  toDos.map(el => {
+                    if (el.done && !el.removed) {
+                      return (
+                        <div className="todos" key={el.id}>
+                          <div className="todo col-12 border border-success border-1" style={{ backgroundColor: 'rgba(25, 135, 84, 0.03)' }}>
+                            <div className="col-11 text-center">
+                              <p className="todo-content h5 my-2 text-success" style={{ marginBottom: '0px' }}>
+                                {el.value}
+                              </p>
+                              <p style={{ marginBottom: '', fontSize: '0.7em', color: '#6c757d' }}>
+                                Done on: {getTime(el.id)}
+                              </p>
+                            </div>
+                            <div className="col-1 d-flex flex-column gap-1">
+                              <button className="btn btn-primary btn-sm shadow" onClick={
+                                () => {
+                                  addTodos(
+                                    toDos.map(o => {
+                                      if (o.id === el.id) {
+                                        o.done = !o.done;
+                                        o.id = Date.now();
+                                      }
+                                      return o
+                                    })
+                                  )
+                                }
+                              }>
+                                <i className="fas fa-undo fa-xs text-white" />
+                              </button>
+                              <button className="btn btn-danger btn-sm shadow" onClick={
                                 () => {
                                   addTodos(
                                     toDos.filter(o => {
@@ -180,55 +177,55 @@ function App() {
                                     })
                                   )
                                 }
-                              } />
-                            </button>
+                              } >
+                                <i className="fas fa-times fa-xs text-white" />
+                              </button>
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    )
-                  }
-                  else {
-                    return null
-                  }
-                })
-              }
+                      )
+                    }
+                    else {
+                      return null
+                    }
+                  })
+                }
+              </div>
             </div>
-          </div>
-          <div className="col-md-4 mb-3 border pb-3 rounded-3 pt-1">
-            <h6 align="center"> Cancelled ({toDos.filter(el => el.removed).length})</h6>
-            <div className="row">
-              {
-                toDos.map(el => {
-                  if (el.removed) {
-                    return (
-                      <div className="todos" key={el.id}>
-                        <div className="todo col-12 border border-danger border-1 text-center animate__animated animate__bounceIn animate__faster" style={{ backgroundColor: 'rgba(220, 53, 69, 0.1)' }}>
-                          <div className="col-11">
-                            <p className="todo-content h5 my-2 text-danger" style={{ marginBottom: '0px' }}>
-                              {el.value}
-                            </p>
-                            <p style={{ marginBottom: '', fontSize: '0.7em', color: '#6c757d' }}>
-                              Cancelled on: {getTime(el.id)}
-                            </p>
-                          </div>
-                          <div className="col-1 d-flex flex-column gap-1">
-                            <button className="btn btn-success btn-sm shadow" onClick={
-                              () => {
-                                addTodos(
-                                  toDos.map(o => {
-                                    if (o.id === el.id) {
-                                      o.removed = !o.removed;
-                                      o.id = Date.now()
-                                    }
-                                    return o
-                                  })
-                                )
-                              }
-                            }>
-                              <i className="fas fa-redo fa-xs text-white" />
-                            </button>
-                            <button className="btn btn-danger btn-sm shadow">
-                              <i className="fas fa-times fa-xs text-white" onClick={
+            <div className="col-md-4 mb-3 border pb-3 rounded-3 pt-1">
+              <h6 align="center"> Cancelled ({toDos.filter(el => el.removed).length})</h6>
+              <div className="row">
+                {
+                  toDos.map(el => {
+                    if (el.removed) {
+                      return (
+                        <div className="todos" key={el.id}>
+                          <div className="todo col-12 border border-danger border-1 text-center" style={{ backgroundColor: 'rgba(220, 53, 69, 0.03)' }}>
+                            <div className="col-11">
+                              <p className="todo-content h5 my-2 text-danger" style={{ marginBottom: '0px' }}>
+                                {el.value}
+                              </p>
+                              <p style={{ marginBottom: '', fontSize: '0.7em', color: '#6c757d' }}>
+                                Cancelled on: {getTime(el.id)}
+                              </p>
+                            </div>
+                            <div className="col-1 d-flex flex-column gap-1">
+                              <button className="btn btn-success btn-sm shadow" onClick={
+                                () => {
+                                  addTodos(
+                                    toDos.map(o => {
+                                      if (o.id === el.id) {
+                                        o.removed = !o.removed;
+                                        o.id = Date.now()
+                                      }
+                                      return o
+                                    })
+                                  )
+                                }
+                              }>
+                                <i className="fas fa-redo fa-xs text-white" />
+                              </button>
+                              <button className="btn btn-danger btn-sm shadow" onClick={
                                 () => {
                                   addTodos(
                                     toDos.filter(o => {
@@ -239,18 +236,20 @@ function App() {
                                     })
                                   )
                                 }
-                              } />
-                            </button>
+                              } >
+                                <i className="fas fa-times fa-xs text-white" />
+                              </button>
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    )
-                  }
-                  else {
-                    return (null)
-                  }
-                })
-              }
+                      )
+                    }
+                    else {
+                      return (null)
+                    }
+                  })
+                }
+              </div>
             </div>
           </div>
         </div>
